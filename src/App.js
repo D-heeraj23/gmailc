@@ -1,12 +1,16 @@
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
 function App() {
   return (
-    <>
-      <Route path={"/"}>
+    <Switch>
+      <Route path={"/signup"}>
+        <Signup />
+      </Route>
+      <Route path={"/"} exact>
         <Signin />
       </Route>
-    </>
+    </Switch>
   );
 }
 
