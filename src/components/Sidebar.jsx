@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BiPlus } from "react-icons/bi";
 import { BsInbox } from "react-icons/bs";
 import { TbTagStarred } from "react-icons/tb";
@@ -7,13 +7,18 @@ import { NavLink } from "react-router-dom";
 import { MdLabelImportant } from "react-icons/md";
 import { MdDrafts } from "react-icons/md";
 import { BiSend } from "react-icons/bi";
+import UiContext from "../context/UiContext";
 import "./Sidebar.css";
 
 const Sidebar = () => {
+  const { openMessageWindow } = useContext(UiContext);
   return (
     <div>
       <div className="w-[20rem] h-screen flex flex-col items-center space-y-2">
-        <button className="flex items-center justify-center mt-5 p-5 w-40 rounded-full shadow-md bg-white">
+        <button
+          className="flex items-center justify-center mt-5 p-5 w-40 rounded-full shadow-md bg-white"
+          onClick={() => openMessageWindow()}
+        >
           <span>
             <BiPlus className="text-[30px]" />
           </span>

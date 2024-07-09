@@ -9,12 +9,17 @@ import Snoozed from "./pages/Snoozed";
 import Important from "./pages/Important";
 import Drafts from "./pages/Drafts";
 import Sent from "./pages/Sent";
+import MessageWindow from "./components/MessageWindow";
+import { useContext } from "react";
+import UiContext from "./context/UiContext";
 function App() {
   const isLoggedIn = true;
+  const { showMessageWindow } = useContext(UiContext);
   return (
-    <div>
+    <div className="relative">
       {isLoggedIn && <Navbar />}
       {isLoggedIn && <Sidebar />}
+      {showMessageWindow && <MessageWindow />}
       <Switch>
         <Route path={"/signup"}>
           <Signup />
