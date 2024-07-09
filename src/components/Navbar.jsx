@@ -4,7 +4,7 @@ import { BiSquare } from "react-icons/bi";
 import { BiBell } from "react-icons/bi";
 const Navbar = () => {
   return (
-    <div className="flex items-center justify-between border-b">
+    <div className=" bg-white flex items-center justify-between border-b relative top-0">
       <div className="flex items-center">
         <BiMenu className="text-2xl m-3 text-[#787878]" />
         <img

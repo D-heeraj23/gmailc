@@ -44,7 +44,6 @@ const Signup = () => {
         throw new Error(errorMessage);
       }
 
-      const data = await resposne.json();
       alert("signup success now you signin");
       history.replace("/");
     } catch (error) {

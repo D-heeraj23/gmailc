@@ -35,7 +35,7 @@ const Signin = () => {
       const data = await response.json();
       localStorage.setItem("token", data.idToken);
       localStorage.setItem("email", emailInputRef.current.value);
-      history.replace("/home");
+      history.replace("/inbox");
     } catch (error) {
       toast.error(error.message);
     }
