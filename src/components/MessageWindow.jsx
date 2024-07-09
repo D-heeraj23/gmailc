@@ -1,9 +1,40 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BiMinus } from "react-icons/bi";
 import UiContext from "../context/UiContext";
 
 const MessageWindow = () => {
   const { closeMessageWindow } = useContext(UiContext);
+  const [reciverEmail, setReciverEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [textarea, setTextArea] = useState("");
+
+  const recieverEmailChangeHandler = (e) => {
+    setReciverEmail(e.target.value);
+  };
+  const subjectChangeHandler = (e) => {
+    setSubject(e.target.value);
+  };
+  const textAreaChangeHandler = (e) => {
+    setTextArea(e.target.value);
+  };
+
+  const mailDataHandler = async (e) => {
+    e.preventDefault();
+    const data = {
+      cleanedreciverEmail: reciverEmail.replace(/[@.]/g, ""),
+      subject,
+      textarea,
+    };
+
+    const response = await fetch(
+      `https://c-bc82f-default-rtdb.firebaseio.com/${data.cleanedreciverEmail}.json`,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+      }
+    );
+  };
+
   return (
     <div className="size-[35rem] bg-white fixed z-50 bottom-0 right-40 shadow-xl rounded-lg flex flex-col justify-between">
       <div>
@@ -21,19 +52,27 @@ const MessageWindow = () => {
             type="text"
             placeholder="to"
             className="outline-none border-b p-3"
+            onChange={recieverEmailChangeHandler}
           />
           <input
             type="text"
             placeholder="subject"
             className="outline-none border-b p-3"
+            onChange={subjectChangeHandler}
           />
 
-          <textarea className="h-[20rem] outline-none p-3"></textarea>
+          <textarea
+            className="h-[20rem] outline-none p-3"
+            onChange={textAreaChangeHandler}
+          ></textarea>
         </div>
       </div>
 
       <div className="flex items-start m-5 ml-9">
-        <button className="bg-blue-600 w-32 p-2 rounded-full text-xl text-white">
+        <button
+          className="bg-blue-600 w-32 p-2 rounded-full text-xl text-white"
+          onClick={mailDataHandler}
+        >
           Send
         </button>
       </div>
