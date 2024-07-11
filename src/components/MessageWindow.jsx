@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { BiMinus } from "react-icons/bi";
 import UiContext from "../context/UiContext";
+import { BeatLoader } from "react-spinners";
 
 const MessageWindow = () => {
   const { closeMessageWindow } = useContext(UiContext);
+  const [loading, setLoading] = useState(false);
   const [reciverEmail, setReciverEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [textarea, setTextArea] = useState("");
@@ -32,14 +34,16 @@ const MessageWindow = () => {
       textarea,
       timeStamp: formatTime(new Date()),
     };
-
+    setLoading(true);
     const response = await fetch(
-      `https://c-bc82f-default-rtdb.firebaseio.com/${data.cleanedreciverEmail}.json`, //sneding mails to fb
+      `https://c-bc82f-default-rtdb.firebaseio.com/${data.cleanedreciverEmail}.json`, //sending mails to fb
       {
         method: "POST",
         body: JSON.stringify(data),
       }
     );
+    setLoading(false);
+    closeMessageWindow();
   };
 
   return (
@@ -80,7 +84,13 @@ const MessageWindow = () => {
           className="bg-blue-600 w-32 p-2 rounded-full text-xl text-white"
           onClick={mailDataHandler}
         >
-          Send
+          {loading ? (
+            <div>
+              <BeatLoader color="white" />
+            </div>
+          ) : (
+            "Send"
+          )}
         </button>
       </div>
     </div>

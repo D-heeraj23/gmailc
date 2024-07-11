@@ -1,11 +1,14 @@
 import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store";
 
 const Signin = () => {
   const history = useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const dispatch = useDispatch();
 
   const signInHandler = async () => {
     const email = emailInputRef.current.value;
@@ -35,11 +38,13 @@ const Signin = () => {
       const data = await response.json();
       localStorage.setItem("token", data.idToken);
       localStorage.setItem("email", emailInputRef.current.value);
+      dispatch(authActions.login());
       history.replace("/inbox");
     } catch (error) {
       toast.error(error.message);
     }
   };
+
   return (
     <>
       <div className="bg-[#f5f5f5] w-full h-screen flex items-center justify-around flex-col p-8 lg:w-[40rem] lg:h-3/4 lg:absolute lg:top-[50%] lg:left-[50%] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:bg-white lg:shadow-2xl lg:rounded-xl lg:p-8">

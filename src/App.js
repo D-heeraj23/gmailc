@@ -12,11 +12,15 @@ import Sent from "./pages/Sent";
 import MessageWindow from "./components/MessageWindow";
 import { useContext } from "react";
 import UiContext from "./context/UiContext";
+import { useSelector } from "react-redux";
+
 function App() {
-  const isLoggedIn = true;
   const { showMessageWindow } = useContext(UiContext);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  console.log(isLoggedIn, "is logged in");
+
   return (
-    <div className="relative">
+    <div>
       {isLoggedIn && <Navbar />}
       {isLoggedIn && <Sidebar />}
       {showMessageWindow && <MessageWindow />}

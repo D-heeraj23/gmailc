@@ -2,6 +2,7 @@ import React from "react";
 import { BiMenu } from "react-icons/bi";
 import { BiSquare } from "react-icons/bi";
 import { BiBell } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
 const Navbar = () => {
   return (
     <div className=" bg-white flex items-center justify-between border-b relative top-0">
@@ -24,6 +25,7 @@ const Navbar = () => {
       <div className="flex mr-6 gap-3">
         <BiSquare className=" text-[#787878] text-2xl" />
         <BiBell className="text-[#787878] text-2xl" />
+        <CgProfile className="text-[#787878] text-2xl" />
       </div>
     </div>
   );
