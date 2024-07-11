@@ -44,6 +44,7 @@ const Inbox = () => {
         loadedMails.push({
           subject: data[keys].subject,
           textarea: data[keys].textarea,
+          time: data[keys].timeStamp,
         });
       }
       setFetchedMails(loadedMails);
@@ -51,6 +52,7 @@ const Inbox = () => {
     fetchMails();
   }, []);
   console.log(fetchedMails, "checking fetched mails");
+
   return (
     <div className="bg-[#f5f5f5] absolute top-20 left-[20rem] h-screen w-[85rem]">
       <div className="space-y-1">

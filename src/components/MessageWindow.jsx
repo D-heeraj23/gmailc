@@ -18,16 +18,23 @@ const MessageWindow = () => {
     setTextArea(e.target.value);
   };
 
+  const formatTime = (date) => {
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+
   const mailDataHandler = async (e) => {
     e.preventDefault();
     const data = {
       cleanedreciverEmail: reciverEmail.replace(/[@.]/g, ""),
       subject,
       textarea,
+      timeStamp: formatTime(new Date()),
     };
 
     const response = await fetch(
-      `https://c-bc82f-default-rtdb.firebaseio.com/${data.cleanedreciverEmail}.json`,
+      `https://c-bc82f-default-rtdb.firebaseio.com/${data.cleanedreciverEmail}.json`, //sneding mails to fb
       {
         method: "POST",
         body: JSON.stringify(data),
