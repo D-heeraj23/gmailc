@@ -1,14 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { BiMinus } from "react-icons/bi";
-import UiContext from "../context/UiContext";
 import { BeatLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { uiAction } from "../store";
 
 const MessageWindow = () => {
-  const { closeMessageWindow } = useContext(UiContext);
   const [loading, setLoading] = useState(false);
   const [reciverEmail, setReciverEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [textarea, setTextArea] = useState("");
+  const dispatch = useDispatch();
 
   const recieverEmailChangeHandler = (e) => {
     setReciverEmail(e.target.value);
@@ -43,7 +44,6 @@ const MessageWindow = () => {
       }
     );
     setLoading(false);
-    closeMessageWindow();
   };
 
   return (
@@ -53,7 +53,10 @@ const MessageWindow = () => {
           <div className="text-xl">New message</div>
           <div className="flex items-center gap-6 text-xl font-bold cursor-pointer">
             <BiMinus />
-            <button className="mr-5" onClick={() => closeMessageWindow()}>
+            <button
+              className="mr-5"
+              onClick={() => dispatch(uiAction.closeMessageWindowHandler())}
+            >
               x
             </button>
           </div>

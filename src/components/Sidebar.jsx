@@ -7,17 +7,18 @@ import { NavLink } from "react-router-dom";
 import { MdLabelImportant } from "react-icons/md";
 import { MdDrafts } from "react-icons/md";
 import { BiSend } from "react-icons/bi";
-import UiContext from "../context/UiContext";
 import "./Sidebar.css";
+import { useDispatch } from "react-redux";
+import { uiAction } from "../store";
 
 const Sidebar = () => {
-  const { openMessageWindow } = useContext(UiContext);
+  const dispatch = useDispatch();
   return (
     <div>
       <div className="w-[20rem] h-screen flex flex-col items-center space-y-2">
         <button
           className="flex items-center justify-center mt-5 p-5 w-40 rounded-full shadow-md bg-white"
-          onClick={() => openMessageWindow()}
+          onClick={() => dispatch(uiAction.showMessageWindowHandler())}
         >
           <span>
             <BiPlus className="text-[30px]" />

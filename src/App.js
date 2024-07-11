@@ -10,20 +10,17 @@ import Important from "./pages/Important";
 import Drafts from "./pages/Drafts";
 import Sent from "./pages/Sent";
 import MessageWindow from "./components/MessageWindow";
-import { useContext } from "react";
-import UiContext from "./context/UiContext";
 import { useSelector } from "react-redux";
 
 function App() {
-  const { showMessageWindow } = useContext(UiContext);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  console.log(isLoggedIn, "is logged in");
+  const isOpen = useSelector((state) => state.ui.showMessageWindow);
 
   return (
     <div>
       {isLoggedIn && <Navbar />}
       {isLoggedIn && <Sidebar />}
-      {showMessageWindow && <MessageWindow />}
+      {isOpen && <MessageWindow />}
       <Switch>
         <Route path={"/signup"}>
           <Signup />
@@ -47,6 +44,9 @@ function App() {
           <Sent />
         </Route>
         <Route path={"/"} exact>
+          <Signin />
+        </Route>
+        <Route path={"*"}>
           <Signin />
         </Route>
       </Switch>
