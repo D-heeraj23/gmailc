@@ -44,6 +44,7 @@ const MessageWindow = () => {
       }
     );
     setLoading(false);
+    dispatch(uiAction.closeMessageWindowHandler());
   };
 
   return (
