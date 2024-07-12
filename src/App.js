@@ -12,6 +12,7 @@ import Sent from "./pages/Sent";
 import MessageWindow from "./components/MessageWindow";
 import { useSelector } from "react-redux";
 import Profile from "./components/Profile";
+import MailsDetail from "./components/MailsDetail";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -23,6 +24,7 @@ function App() {
       {isLoggedIn && <Sidebar />}
       {isOpen && <MessageWindow />}
       {profileIsOpen && <Profile />}
+      <MailsDetail />
       <Switch>
         <Route path={"/signup"}>
           <Signup />

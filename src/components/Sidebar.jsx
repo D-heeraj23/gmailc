@@ -15,7 +15,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <div className="w-[20rem] h-screen flex flex-col items-center space-y-2">
+      <div className="w-[20rem] h-[90vh] flex flex-col items-center space-y-2">
         <button
           className="flex items-center justify-center mt-5 p-5 w-40 rounded-full shadow-md bg-white"
           onClick={() => dispatch(uiAction.showMessageWindowHandler())}

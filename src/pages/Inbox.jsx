@@ -27,7 +27,7 @@ const Inbox = () => {
   }, []);
 
   return (
-    <div className="bg-white absolute top-20 left-[20rem] h-screen w-[99rem]">
+    <div className="absolute top-20 left-[20rem] h-[90vh] w-[99rem]">
       <div className="space-y-1">
         {fetchedMails.map((mails, i) => (
           <div
