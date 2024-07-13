@@ -18,22 +18,32 @@ function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const isOpen = useSelector((state) => state.ui.showMessageWindow);
   const profileIsOpen = useSelector((state) => state.ui.showProfileWindow);
+
   return (
     <div>
       {isLoggedIn && <Navbar />}
       {isLoggedIn && <Sidebar />}
       {isOpen && <MessageWindow />}
       {profileIsOpen && <Profile />}
-      <MailsDetail />
       <Switch>
-        <Route path={"/signup"}>
-          <Signup />
-        </Route>
+        {!isLoggedIn && (
+          <Route path={"/signup"}>
+            <Signup />
+          </Route>
+        )}
+
+        {isLoggedIn && (
+          <Route path={"/inbox/:id"}>
+            <MailsDetail />
+          </Route>
+        )}
+
         {isLoggedIn && (
           <Route path={"/inbox"}>
             <Inbox />
           </Route>
         )}
+
         {isLoggedIn && (
           <Route path={"/starred"}>
             <Starred />
@@ -59,9 +69,12 @@ function App() {
             <Sent />
           </Route>
         )}
-        <Route path={"/"} exact>
-          <Signin />
-        </Route>
+
+        {!isLoggedIn && (
+          <Route path={"/"} exact>
+            <Signin />
+          </Route>
+        )}
         <Route path={"*"}>
           <Signin />
         </Route>

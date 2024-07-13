@@ -34,14 +34,28 @@ const uiSlice = createSlice({
   },
 });
 
+const mailSlice = createSlice({
+  name: "mail",
+  initialState: {
+    selectMessage: null,
+  },
+  reducers: {
+    openMessage(state, action) {
+      state.selectMessage = action.payload;
+    },
+  },
+});
+
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     ui: uiSlice.reducer,
+    mail: mailSlice.reducer,
   },
 });
 
 export const authActions = authSlice.actions;
 export const uiAction = uiSlice.actions;
+export const mailAction = mailSlice.actions;
 
 export default store;

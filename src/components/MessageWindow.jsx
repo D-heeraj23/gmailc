@@ -30,6 +30,7 @@ const MessageWindow = () => {
   const mailDataHandler = async (e) => {
     e.preventDefault();
     const data = {
+      id: Math.random().toString(),
       cleanedreciverEmail: reciverEmail.replace(/[@.]/g, ""),
       subject,
       textarea,

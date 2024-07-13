@@ -1,13 +1,19 @@
 import React, { useEffect } from "react";
 import { BiStar } from "react-icons/bi";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { mailAction } from "../store/index";
 
 const Inbox = () => {
   const [fetchedMails, setFetchedMails] = useState([]);
   const email = localStorage.getItem("email");
   const cleanedEmail = email.replace(/[@.]/g, "");
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    //getting data from fb
     const fetchMails = async () => {
       const response = await fetch(
         `https://c-bc82f-default-rtdb.firebaseio.com/${cleanedEmail}.json`
@@ -16,6 +22,7 @@ const Inbox = () => {
       const data = await response.json();
       for (const keys in data) {
         loadedMails.push({
+          id: data[keys].id,
           subject: data[keys].subject,
           textarea: data[keys].textarea,
           time: data[keys].timeStamp,
@@ -26,6 +33,13 @@ const Inbox = () => {
     fetchMails();
   }, []);
 
+  console.log(fetchedMails, "some fetch mails");
+
+  const openMessage = (id) => {
+    dispatch(mailAction.openMessage(fetchedMails));
+    history.push(`/inbox/${id}`);
+  };
+
   return (
     <div className="absolute top-20 left-[20rem] h-[90vh] w-[99rem]">
       <div className="space-y-1">
@@ -33,6 +47,7 @@ const Inbox = () => {
           <div
             key={i}
             className="bg-[#f3f3f3] flex justify-between items-center p-2"
+            onClick={() => openMessage(mails.id)}
           >
             <div>
               <button>
