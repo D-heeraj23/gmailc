@@ -11,7 +11,8 @@ const MessageWindow = () => {
   const [textarea, setTextArea] = useState("");
   const dispatch = useDispatch();
   const senderEmail = localStorage.getItem("email");
-
+  const cleanedSenderEmail = senderEmail.replace(/[@.]/g, "");
+  console.log(cleanedSenderEmail, "cleanSender email, from message");
   const recieverEmailChangeHandler = (e) => {
     setReciverEmail(e.target.value);
   };
@@ -28,8 +29,7 @@ const MessageWindow = () => {
     return `${hours}:${minutes}`;
   };
 
-  const mailDataHandler = async (e) => {
-    e.preventDefault();
+  const mailDataHandler = async () => {
     const data = {
       id: Math.random().toString(),
       cleanedreciverEmail: reciverEmail.replace(/[@.]/g, ""),
@@ -48,6 +48,14 @@ const MessageWindow = () => {
     );
     setLoading(false);
     dispatch(uiAction.closeMessageWindowHandler());
+
+    await fetch(
+      `https://c-bc82f-default-rtdb.firebaseio.com/${cleanedSenderEmail}.json`, //sending mails for sent
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+      }
+    );
   };
 
   return (
