@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 const MailsDetail = () => {
   const { id } = useParams();
   const selectedMail = useSelector((state) => state.mail.selectMessage);
+  console.log(selectedMail, "from detail component");
   const mail = selectedMail.find((mails) => mails.id === id);
 
   return (
@@ -22,7 +23,7 @@ const MailsDetail = () => {
 
       <div className="mt-10 font-semibold text-4xl">{mail.subject}</div>
       <div className="mt-7 flex justify-between font-semibold border-b">
-        <div className="text-2xl">rishabh123@gmail.com</div>
+        <div className="text-2xl">{mail.senderEmail}</div>
         <div className="text-zinc-400">{mail.timeStamp}</div>
       </div>
       <div className="flex items-center justify-center flex-col mt-20 p-20">

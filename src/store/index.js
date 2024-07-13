@@ -37,11 +37,15 @@ const uiSlice = createSlice({
 const mailSlice = createSlice({
   name: "mail",
   initialState: {
-    selectMessage: null,
+    selectMessage: [],
+    totalMails: [],
   },
   reducers: {
     openMessage(state, action) {
       state.selectMessage = action.payload;
+    },
+    totalMails(state, action) {
+      state.totalMails = action.payload;
     },
   },
 });

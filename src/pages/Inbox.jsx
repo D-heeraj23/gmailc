@@ -26,14 +26,14 @@ const Inbox = () => {
           subject: data[keys].subject,
           textarea: data[keys].textarea,
           time: data[keys].timeStamp,
+          senderEmail: data[keys].senderEmail,
         });
       }
+      dispatch(mailAction.totalMails(loadedMails));
       setFetchedMails(loadedMails);
     };
     fetchMails();
-  }, []);
-
-  console.log(fetchedMails, "some fetch mails");
+  }, [cleanedEmail]);
 
   const openMessage = (id) => {
     dispatch(mailAction.openMessage(fetchedMails));

@@ -10,6 +10,7 @@ const MessageWindow = () => {
   const [subject, setSubject] = useState("");
   const [textarea, setTextArea] = useState("");
   const dispatch = useDispatch();
+  const senderEmail = localStorage.getItem("email");
 
   const recieverEmailChangeHandler = (e) => {
     setReciverEmail(e.target.value);
@@ -34,10 +35,11 @@ const MessageWindow = () => {
       cleanedreciverEmail: reciverEmail.replace(/[@.]/g, ""),
       subject,
       textarea,
+      senderEmail,
       timeStamp: formatTime(new Date()),
     };
     setLoading(true);
-    const response = await fetch(
+    await fetch(
       `https://c-bc82f-default-rtdb.firebaseio.com/${data.cleanedreciverEmail}.json`, //sending mails to fb
       {
         method: "POST",

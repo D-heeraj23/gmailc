@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import { BiPlus } from "react-icons/bi";
 import { BsInbox } from "react-icons/bs";
 import { TbTagStarred } from "react-icons/tb";
@@ -8,11 +7,13 @@ import { MdLabelImportant } from "react-icons/md";
 import { MdDrafts } from "react-icons/md";
 import { BiSend } from "react-icons/bi";
 import "./Sidebar.css";
-import { useDispatch } from "react-redux";
 import { uiAction } from "../store";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const totalMails = useSelector((state) => state.mail.totalMails);
+
   return (
     <div>
       <div className="w-[20rem] h-[90vh] flex flex-col items-center space-y-2">
@@ -36,7 +37,7 @@ const Sidebar = () => {
             <BsInbox />
             Inbox
           </div>
-          <div className="mr-6 font-bold">123</div>
+          <div className="mr-6 font-bold">{totalMails.length}</div>
         </NavLink>
 
         <NavLink
