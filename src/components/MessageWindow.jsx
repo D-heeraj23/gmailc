@@ -12,7 +12,6 @@ const MessageWindow = () => {
   const dispatch = useDispatch();
   const senderEmail = localStorage.getItem("email");
   const cleanedSenderEmail = senderEmail.replace(/[@.]/g, "");
-  console.log(cleanedSenderEmail, "cleanSender email, from message");
   const recieverEmailChangeHandler = (e) => {
     setReciverEmail(e.target.value);
   };
@@ -32,7 +31,7 @@ const MessageWindow = () => {
   const mailDataHandler = async () => {
     const data = {
       id: Math.random().toString(),
-      cleanedreciverEmail: reciverEmail.replace(/[@.]/g, ""),
+      cleanedreciverEmail: reciverEmail.replace(/[@.]/g, ""), //dheeroy00gmailcom
       subject,
       textarea,
       senderEmail,
@@ -40,7 +39,7 @@ const MessageWindow = () => {
     };
     setLoading(true);
     await fetch(
-      `https://c-bc82f-default-rtdb.firebaseio.com/${data.cleanedreciverEmail}.json`, //sending mails to fb
+      `https://c-bc82f-default-rtdb.firebaseio.com/${data.cleanedreciverEmail}.json`, //sending mails dheeroy00gmailcom to fb
       {
         method: "POST",
         body: JSON.stringify(data),
@@ -50,7 +49,7 @@ const MessageWindow = () => {
     dispatch(uiAction.closeMessageWindowHandler());
 
     await fetch(
-      `https://c-bc82f-default-rtdb.firebaseio.com/${cleanedSenderEmail}.json`, //sending mails for sent
+      `https://c-bc82f-default-rtdb.firebaseio.com/mail${cleanedSenderEmail}.json`, //sending mails for sent
       {
         method: "POST",
         body: JSON.stringify(data),

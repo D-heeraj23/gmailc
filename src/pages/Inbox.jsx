@@ -7,8 +7,8 @@ import { mailAction } from "../store/index";
 
 const Inbox = () => {
   const [fetchedMails, setFetchedMails] = useState([]);
-  const email = localStorage.getItem("email");
-  const cleanedEmail = email.replace(/[@.]/g, "");
+  const email = localStorage.getItem("email"); //dheeroy00@gmail.com
+  const cleanedEmail = email.replace(/[@.]/g, ""); //dheeroy00gmailcom
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ const Inbox = () => {
     //getting data from fb
     const fetchMails = async () => {
       const response = await fetch(
-        `https://c-bc82f-default-rtdb.firebaseio.com/${cleanedEmail}.json`
+        `https://c-bc82f-default-rtdb.firebaseio.com/${cleanedEmail}.json` //dheeroy00gmailcom getting data;
       );
       const loadedMails = [];
       const data = await response.json();

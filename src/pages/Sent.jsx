@@ -10,7 +10,7 @@ const Sent = () => {
   useEffect(() => {
     const fetchSentData = async () => {
       const response = await fetch(
-        `https://c-bc82f-default-rtdb.firebaseio.com/${senderEmail}.json`
+        `https://c-bc82f-default-rtdb.firebaseio.com/mail${senderEmail}.json`
       );
       const data = await response.json();
       const loadedData = [];
