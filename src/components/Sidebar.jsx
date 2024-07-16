@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Sidebar = () => {
   const dispatch = useDispatch();
   const totalMails = useSelector((state) => state.mail.totalMails);
+  const totalSentMails = useSelector((state) => state.mail.totalSentMails);
 
   return (
     <div>
@@ -61,7 +62,7 @@ const Sidebar = () => {
             <MdSnooze />
             Snoozed
           </div>
-          <div className="mr-6 font-bold">23</div>
+          <div className="mr-6 font-bold">0</div>
         </NavLink>
         <NavLink
           to={"/important"}
@@ -83,7 +84,7 @@ const Sidebar = () => {
             <MdDrafts />
             Drafts
           </div>
-          <div className="mr-6 font-bold">1</div>
+          <div className="mr-6 font-bold">0</div>
         </NavLink>
         <NavLink
           to={"/sent"}
@@ -94,7 +95,7 @@ const Sidebar = () => {
             <BiSend />
             Sent
           </div>
-          <div className="mr-6 font-bold">1</div>
+          <div className="mr-6 font-bold">{totalSentMails.length}</div>
         </NavLink>
       </div>
     </div>

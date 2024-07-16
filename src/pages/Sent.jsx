@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { BiStar } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { mailAction } from "../store";
 
 const Sent = () => {
   const [sentData, setSentData] = useState([]);
   const email = localStorage.getItem("email");
   const senderEmail = email.replace(/[@.]/g, "");
-  console.log(senderEmail, "from sent");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchSentData = async () => {
@@ -26,7 +28,8 @@ const Sent = () => {
     };
     fetchSentData();
   }, []);
-  console.log(sentData, "from sent data");
+  dispatch(mailAction.totalSentMails(sentData));
+
   return (
     <div className="bg-[#f5f5f5] absolute top-20 left-[20rem] h-screen w-[99rem]">
       <div className="space-y-1">

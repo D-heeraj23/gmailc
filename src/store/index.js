@@ -39,6 +39,7 @@ const mailSlice = createSlice({
   initialState: {
     selectMessage: [],
     totalMails: [],
+    totalSentMails: [],
   },
   reducers: {
     openMessage(state, action) {
@@ -46,6 +47,9 @@ const mailSlice = createSlice({
     },
     totalMails(state, action) {
       state.totalMails = action.payload;
+    },
+    totalSentMails(state, action) {
+      state.totalSentMails = action.payload;
     },
   },
 });
