@@ -5,8 +5,10 @@ import { RiSpam2Fill } from "react-icons/ri";
 import { MdDeleteOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const MailsDetail = () => {
+  const history = useHistory();
   const { id } = useParams();
   const selectedMail = useSelector((state) => state.mail.selectMessage);
   console.log(selectedMail, "from detail component");
@@ -15,7 +17,7 @@ const MailsDetail = () => {
   return (
     <div className="absolute top-20 left-[20rem] h-[90vh] w-[99rem] p-10">
       <div className="flex gap-7 text-[30px]">
-        <BiArrowBack />
+        <BiArrowBack onClick={() => history.push("/inbox")} />
         <BiArchive />
         <RiSpam2Fill />
         <MdDeleteOutline />
