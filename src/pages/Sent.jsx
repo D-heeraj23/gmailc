@@ -66,7 +66,7 @@ const Sent = () => {
                   {mails.subject}
                 </div>
                 <div className=" w-[60rem] font-bold">{mails.textarea}</div>
-                <div className=" w-[6rem] font-semibold">{mails.time}</div>
+                <div className=" w-[6rem] font-semibold">{mails.timeStamp}</div>
               </div>
             ))}
           </div>

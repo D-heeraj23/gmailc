@@ -11,7 +11,6 @@ const MailsDetail = () => {
   const history = useHistory();
   const { id } = useParams();
   const selectedMail = useSelector((state) => state.mail.selectMessage);
-  console.log(selectedMail, "from detail component");
   const mail = selectedMail.find((mails) => mails.id === id);
 
   return (

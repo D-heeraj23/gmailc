@@ -17,7 +17,10 @@ const authSlice = createSlice({
 
 const uiSlice = createSlice({
   name: "Ui",
-  initialState: { showMessageWindow: false, showProfileWindow: false },
+  initialState: {
+    showMessageWindow: false,
+    showProfileWindow: false,
+  },
   reducers: {
     showMessageWindowHandler(state) {
       state.showMessageWindow = true;

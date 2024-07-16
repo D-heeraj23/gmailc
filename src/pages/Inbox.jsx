@@ -6,17 +6,15 @@ import { useDispatch } from "react-redux";
 import { mailAction } from "../store/index";
 import { PropagateLoader } from "react-spinners";
 import { MdDeleteOutline } from "react-icons/md";
-import { BiArchive } from "react-icons/bi";
-import { RiSpam2Fill } from "react-icons/ri";
 
 const Inbox = () => {
   const [fetchedMails, setFetchedMails] = useState([]);
-  const [checkedBoxes, setCheckedBoxes] = useState({});
   const [loading, setLoading] = useState(false);
   const email = localStorage.getItem("email"); //dheeroy00@gmail.com
   const cleanedEmail = email.replace(/[@.]/g, ""); //dheeroy00gmailcom
   const history = useHistory();
   const dispatch = useDispatch();
+  const [reRender, setReRender] = useState(true);
 
   useEffect(() => {
     //getting data from fb
@@ -29,6 +27,7 @@ const Inbox = () => {
       const data = await response.json();
       for (const keys in data) {
         loadedMails.push({
+          fbId: keys,
           id: data[keys].id,
           subject: data[keys].subject,
           textarea: data[keys].textarea,
@@ -41,53 +40,27 @@ const Inbox = () => {
       setLoading(false);
     };
     fetchMails();
-  }, [cleanedEmail, dispatch]);
+  }, [cleanedEmail, dispatch, reRender]);
 
   const openMessage = (id) => {
     dispatch(mailAction.openMessage(fetchedMails));
     history.push(`/inbox/${id}`);
   };
 
-  const handleCheckboxChange = (id) => {
-    setCheckedBoxes((prevCheckedBoxes) => ({
-      ...prevCheckedBoxes,
-      [id]: !prevCheckedBoxes[id],
-    }));
-  };
-
-  const deleteHandler = async () => {
-    const selectedMails = Object.keys(checkedBoxes).filter(
-      (id) => checkedBoxes[id]
-    );
-
-    if (selectedMails.length === 0) {
-      return;
-    }
-
-    setLoading(true);
-
-    for (const id of selectedMails) {
+  const deleteHandler = async (id) => {
+    try {
       await fetch(
-        `https://c-bc82f-default-rtdb.firebaseio.com/${cleanedEmail}/${id}.json`,
+        `https://c-bc82f-default-rtdb.firebaseio.com/${cleanedEmail}/${id}/.json`,
         {
           method: "DELETE",
         }
       );
+    } catch (error) {
+      console.log("error");
+    } finally {
+      setReRender((prev) => !prev);
     }
-
-    const remainingMails = fetchedMails.filter(
-      (mail) => !selectedMails.includes(mail.id)
-    );
-
-    dispatch(mailAction.totalMails(remainingMails));
-    setFetchedMails(remainingMails);
-    setCheckedBoxes({});
-    setLoading(false);
   };
-
-  const areAnyChecked = Object.values(checkedBoxes).some(
-    (isChecked) => isChecked
-  );
 
   return (
     <>
@@ -107,19 +80,11 @@ const Inbox = () => {
         </div>
       ) : (
         <div className="absolute top-20 left-[20rem] h-[90vh] w-[99rem]">
-          {areAnyChecked && (
-            <div className=" text-3xl m-4 p-4 flex items-center gap-4 text-zinc-600 hover:cursor-pointer">
-              <MdDeleteOutline onClick={deleteHandler} />
-              <BiArchive />
-              <RiSpam2Fill />
-            </div>
-          )}
-
           <div className="space-y-1">
             {fetchedMails.map((mails) => (
               <div
-                key={mails.id}
-                className="bg-[#f3f3f3] flex justify-between items-center p-2"
+                key={mails.fbId}
+                className="bg-[#f3f3f3] flex justify-between items-center p-2 hover:cursor-pointer"
               >
                 <div className="flex gap-5 items-center text-2xl">
                   <button>
@@ -127,12 +92,6 @@ const Inbox = () => {
                       <BiStar />
                     </span>
                   </button>
-                  <input
-                    type="checkbox"
-                    className="size-5"
-                    checked={checkedBoxes[mails.id] || false}
-                    onChange={() => handleCheckboxChange(mails.id)}
-                  />
                 </div>
                 <div
                   className=" w-[15rem] text-lg font-bold"
@@ -142,6 +101,9 @@ const Inbox = () => {
                 </div>
                 <div className=" w-[60rem] font-bold">{mails.textarea}</div>
                 <div className=" w-[6rem] font-semibold">{mails.time}</div>
+                <div className="p-2 text-3xl hover:text-red-400">
+                  <MdDeleteOutline onClick={() => deleteHandler(mails.fbId)} />
+                </div>
               </div>
             ))}
           </div>
